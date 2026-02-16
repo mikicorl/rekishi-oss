@@ -2,6 +2,11 @@
   "name": "rekishi",
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "build": "bun run --filter '*' build",
+    "deploy": "bun run --filter '*' deploy"
+  },
   "devDependencies": {
     "typescript": "^5.7.2"
   }
