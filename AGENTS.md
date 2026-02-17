@@ -9,16 +9,20 @@ rekishi — SaaS向け監査ログ基盤（OSS/Cloud）
 ## Tech Stack
 
 - **Runtime**: Cloudflare Workers
-- **Framework**: Hono
+- **Framework**:
+  - API: Hono
+  - Web: React + TanStack Start (Router + Query)
 - **Build**: Vite + @cloudflare/vite-plugin
 - **Language**: TypeScript (strict)
 - **Package Manager**: Bun (workspaces)
+- **UI Development**: Storybook
 
 ## Project Structure
 
 ```
 apps/           # アプリケーション
   api/          # 監査ログAPI（Hono + Cloudflare Workers + Vite）
+  web/          # Webフロントエンド（React + TanStack Start + Vite）
 packages/       # 共有パッケージ（今後追加）
 docs/           # ドキュメント
 ```

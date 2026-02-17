@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "bun run --filter '*' dev",
     "build": "bun run --filter '*' build",
-    "deploy": "bun run --filter '*' deploy"
+    "deploy": "bun run --filter '*' deploy",
+    "typecheck": "bun run --filter '*' typecheck"
   },
   "devDependencies": {
     "typescript": "^5.7.2",

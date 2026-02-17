@@ -10,7 +10,7 @@
     "deploy": "bun run build && wrangler deploy",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "typescript": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.13.8",
@@ -41,7 +41,6 @@
     "@vitejs/plugin-react": "^5.0.4",
     "jsdom": "^27.0.0",
     "typescript": "^5.7.2",
-    "vite": "^7.1.7",
     "vitest": "^3.0.5",
     "wrangler": "^4.40.3"
   }
