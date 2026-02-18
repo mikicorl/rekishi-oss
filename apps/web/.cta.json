@@ -8,9 +8,5 @@
   "git": true,
   "version": 1,
   "framework": "react-cra",
-  "chosenAddOns": [
-    "cloudflare",
-    "tanstack-query",
-    "storybook"
-  ]
+  "chosenAddOns": ["cloudflare", "tanstack-query", "storybook"]
 }

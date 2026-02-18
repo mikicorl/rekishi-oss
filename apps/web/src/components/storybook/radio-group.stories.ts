@@ -1,53 +1,53 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { fn } from 'storybook/test'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
 
-import { RadioGroup } from './radio-group'
+import { RadioGroup } from "./radio-group";
 
 const meta = {
-  title: 'Form/RadioGroup',
+  title: "Form/RadioGroup",
   component: RadioGroup,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   args: { onChange: fn() },
-} satisfies Meta<typeof RadioGroup>
+} satisfies Meta<typeof RadioGroup>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: 'Employment Type',
-    name: 'employmentType',
+    label: "Employment Type",
+    name: "employmentType",
     options: [
-      { value: 'full-time', label: 'Full Time' },
-      { value: 'part-time', label: 'Part Time' },
+      { value: "full-time", label: "Full Time" },
+      { value: "part-time", label: "Part Time" },
     ],
   },
-}
+};
 
 export const Selected: Story = {
   args: {
-    label: 'Employment Type',
-    name: 'employmentType',
+    label: "Employment Type",
+    name: "employmentType",
     options: [
-      { value: 'full-time', label: 'Full Time' },
-      { value: 'part-time', label: 'Part Time' },
+      { value: "full-time", label: "Full Time" },
+      { value: "part-time", label: "Part Time" },
     ],
-    value: 'full-time',
+    value: "full-time",
   },
-}
+};
 
 export const MultipleOptions: Story = {
   args: {
-    label: 'Subscription Plan',
-    name: 'plan',
+    label: "Subscription Plan",
+    name: "plan",
     options: [
-      { value: 'basic', label: 'Basic' },
-      { value: 'pro', label: 'Pro' },
-      { value: 'enterprise', label: 'Enterprise' },
+      { value: "basic", label: "Basic" },
+      { value: "pro", label: "Pro" },
+      { value: "enterprise", label: "Enterprise" },
     ],
-    value: 'pro',
+    value: "pro",
   },
-}
+};

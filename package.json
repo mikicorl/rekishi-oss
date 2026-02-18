@@ -1,14 +1,23 @@
 {
   "name": "rekishi",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "bun run --filter '*' dev",
     "build": "bun run --filter '*' build",
     "deploy": "bun run --filter '*' deploy",
-    "typecheck": "bun run --filter '*' typecheck"
+    "typecheck": "bun run --filter '*' typecheck",
+    "lint": "oxlint --ignore-path .oxlintignore .",
+    "lint:fix": "oxlint --ignore-path .oxlintignore --fix .",
+    "fmt": "oxfmt --ignore-path .gitignore --ignore-path .oxfmtignore .",
+    "fmt:check": "oxfmt --check --ignore-path .gitignore --ignore-path .oxfmtignore ."
   },
   "devDependencies": {
+    "oxfmt": "^0.33.0",
+    "oxlint": "^1.48.0",
     "typescript": "^5.7.2",
     "vite": "^7.1.7"
   }

@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Worker and framework artifacts
+.wrangler/
+.tanstack/
+.vinxi/
+.output/
+
+# Generated route tree
+apps/web/src/routeTree.gen.ts
