@@ -1,16 +1,12 @@
-# API Architecture (Three Layers Draft)
+# API Architecture (Three Layers)
 
-> [!WARNING]
-> この文書は **暫定方針（Draft）** です。  
-> **最終決定ではありません。** 実装開始前に ADR で確定してください。
-
-## 1. 目的（暫定）
+## 1. 目的
 
 - 元記事の3層モデルを、rekishi の `apps/api` にそのまま適用する
 - 設計を複雑化せず、責務の境界だけを明確にする
 - 将来の差し替えをしやすくする
 
-## 2. 採用する3層（暫定）
+## 2. 採用する3層
 
 1. **The Core (Durable)**
 - 監査ログの不変条件を保持する層
@@ -27,11 +23,7 @@
 - 例: Hono route/handler、D1/KV/R2 adapter、Queue adapter
 - 交換可能・再生成可能であることを前提にする
 
-> [!IMPORTANT]
-> この3層は **提案段階** です。  
-> 実装は ADR 合意後に開始します。
-
-## 3. ディレクトリ構成案（feature colocation / 暫定）
+## 3. ディレクトリ構成（feature colocation）
 
 ```txt
 apps/api/src/
@@ -75,7 +67,7 @@ apps/api/src/
     connectors/
 ```
 
-## 4. `features/events` の責務（最小）
+## 4. `features/events` の責務
 
 - `core/`
   - `AuditEvent` などのドメインモデル
@@ -92,16 +84,16 @@ apps/api/src/
 - `index.ts`
   - feature の公開境界
 
-### 4.1 各責務の最小 example（仮）
+### 4.1 各責務のリファレンス実装
 
-> [!WARNING]
-> 以下はすべて **暫定のサンプルコード** です。  
-> 最終実装は ADR 合意後に見直します。
+> [!NOTE]
+> 以下のコードは各層の責務と実装パターンを示すリファレンスです。
+> 実際の実装では要件に応じて拡張してください。
 
-#### `core/` example
+#### `core/`
 
 ```ts
-// features/events/core/audit-event.ts (draft)
+// features/events/core/audit-event.ts
 export type AuditEvent = Readonly<{
   tenantId: string;
   action: string;
@@ -115,10 +107,10 @@ export const createAuditEvent = (input: AuditEvent): AuditEvent => {
 };
 ```
 
-#### `connectors/` example
+#### `connectors/`
 
 ```ts
-// features/events/connectors/create-event.ts (draft)
+// features/events/connectors/create-event.ts
 import type { AuditEvent } from "../core/audit-event";
 
 export type CreateEventInput = AuditEvent;
@@ -133,10 +125,10 @@ export type CreateEvent = (
 ) => Promise<CreateEventOutput>;
 ```
 
-#### `disposable/` example
+#### `disposable/`
 
 ```ts
-// features/events/disposable/create-event.impl.ts (draft)
+// features/events/disposable/create-event.impl.ts
 import { createAuditEvent } from "../core/audit-event";
 import type {
   CreateEvent,
@@ -155,7 +147,7 @@ export const createEventImpl =
 ```
 
 ```ts
-// features/events/disposable/route.ts (draft)
+// features/events/disposable/route.ts
 import { Hono } from "hono";
 import { createEventImpl } from "./create-event.impl";
 
@@ -166,10 +158,10 @@ export const buildEventRoute = (createEvent: ReturnType<typeof createEventImpl>)
 };
 ```
 
-#### `tests/` example
+#### `tests/`
 
 ```ts
-// features/events/tests/core.spec.ts (draft)
+// features/events/tests/core.spec.ts
 import { describe, expect, it } from "vitest";
 import { createAuditEvent } from "../core/audit-event";
 
@@ -186,10 +178,10 @@ describe("createAuditEvent", () => {
 });
 ```
 
-#### `index.ts` example
+#### `index.ts`
 
 ```ts
-// features/events/index.ts (draft)
+// features/events/index.ts
 import { buildEventRoute } from "./disposable/route";
 import { createEventImpl } from "./disposable/create-event.impl";
 
@@ -198,13 +190,16 @@ const mockRepo = { save: async () => crypto.randomUUID() };
 export const eventsFeature = buildEventRoute(createEventImpl(mockRepo));
 ```
 
-## 5. 依存方向ルール（最重要）
+## 5. 依存方向ルール
+
+> [!IMPORTANT]
+> この依存方向は本アーキテクチャの最も重要な規約です。違反しないよう注意してください。
 
 - `disposable -> connectors -> core`
 - `core` は他層を参照しない
 - `disposable` から `core` へ直接依存しない（`connectors` 経由）
 
-## 6. 確定前に必要な ADR（抜粋）
+## 6. 関連 ADR
 
 - WorkOS 互換範囲（完全互換 / 選択互換）
 - 正式エンドポイント（`/audit_logs/*` と `/events` の扱い）
@@ -213,8 +208,8 @@ export const eventsFeature = buildEventRoute(createEventImpl(mockRepo));
 - Export の CSV 契約と URL 失効ポリシー
 - 共通エラー形式（`code/message/request_id`）
 
-## 7. 最終注意
+## 7. 変更履歴
 
-- この文書は **設計ドラフト** です
-- 実装仕様書ではありません
-- **ADR 合意前は実装しない** 前提で運用します
+| 日付 | 内容 |
+|------|------|
+| 2026-02-19 | 正式採用。Draft 表記を削除し確定版とした |
