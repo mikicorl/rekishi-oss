@@ -27,6 +27,10 @@ packages/       # 共有パッケージ（今後追加）
 docs/           # ドキュメント
 ```
 
+## Architecture
+
+- `apps/api` の開発時は [docs/api_architecture.md](docs/api_architecture.md) を参照すること（3層アーキテクチャ: Core / Connectors / Disposable）
+
 ## Development
 
 ```bash
