@@ -43,6 +43,8 @@ rekishi は `PRODUCT.md` に記載のとおり、以下の性質を持つ。
 
 ### 5.1 API 契約と互換性
 
+> **決定済み** → [ADR-001: API 契約と互換性](adr/adr-001-api-contract-and-compatibility.md)
+
 1. 互換方針の明確化
 - WorkOS 完全互換（パス、レスポンス、エラー）か、rekishi 独自仕様を許容するか
 - 互換対象バージョンを固定するか（将来の追随ルール含む）
