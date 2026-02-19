@@ -217,6 +217,34 @@ Organizationの監査ログ設定を一括で取得する。
 
 ---
 
+## 7. Admin Portal（管理ポータル）
+
+### POST /portal/generate_link — 管理ポータルリンク生成
+
+Organizationの監査ログイベントを閲覧・エクスポートできるAdmin Portalセッション用のリンクを生成する。生成したリンクを顧客に提供することで、顧客自身がイベントを確認できる。
+
+**リクエストボディ:**
+
+| フィールド | 型 | 必須 | 説明 |
+|-----------|------|------|------|
+| `organization` | string | Yes | 対象Organization ID |
+| `intent` | string | Yes | ポータルの用途（監査ログの場合は `audit_logs`） |
+
+**レスポンス:**
+
+```json
+{
+  "link": "https://id.workos.com/portal/launch?secret=..."
+}
+```
+
+**機能:**
+
+- 生成されたリンクにアクセスすると、対象OrganizationのAudit Logイベントを閲覧・エクスポートできるポータル画面が表示される
+- WorkOS Dashboardと同等のイベント閲覧・エクスポート機能を顧客に提供可能
+
+---
+
 ## rekishi で実装すべき API の優先度
 
 | 優先度 | カテゴリ | API | 説明 |
@@ -230,6 +258,7 @@ Organizationの監査ログ設定を一括で取得する。
 | **P1** | スキーマ管理 | `GET /actions/:name/schemas` | スキーマ一覧 |
 | **P1** | 保持期間 | `GET /retention` | 保持期間取得 |
 | **P1** | 保持期間 | `PUT /retention` | 保持期間設定 |
+| **P2** | 管理ポータル | `POST /portal/generate_link` | 顧客向けAdmin Portalリンク生成 |
 | **P2** | ストリーミング | Log Streams 設定・配信 | 外部SIEM/ストレージへのリアルタイム配信 |
 | **P2** | 設定 | `GET /config` | Organization設定の一括取得 |
 
@@ -242,3 +271,4 @@ Organizationの監査ログ設定を一括で取得する。
 - [WorkOS Go SDK - auditlogs パッケージ](https://pkg.go.dev/github.com/workos/workos-go/v3/pkg/auditlogs)
 - [WorkOS Retention API Changelog](https://workos.com/changelog/new-audit-logs-retention-period-api)
 - [WorkOS Log Streams](https://workos.com/docs/audit-logs/log-streams)
+- [WorkOS Admin Portal](https://workos.com/docs/admin-portal)
